@@ -15,12 +15,16 @@ public class Deque<Item> implements Iterable<Item> {
 		}
 	}
 	
+	// 'Sentinel' node points to the first Item
+	// 'last' node points to the last item
 	private Node sentinel;
 	private Node last;
 	private int size;
 	
     // construct an empty deque
     public Deque() {
+    	// Sentinel and Last implemented to avoid some issues with NullPointer when there are 0 items
+    	// Have null pointer and only purpose is to point to start and end of queue
     	this.sentinel = new Node(null, null);
     	this.last = new Node(null, null);
     	this.size = 0;
@@ -43,9 +47,13 @@ public class Deque<Item> implements Iterable<Item> {
     	}
     	
     	Node newFirst = new Node(item, sentinel.next);
+    	
+    	// If it's the first added item, make 'Last' also point to it
     	if (newFirst.next == null) {
     		last.next = newFirst;
     	}
+    	
+    	// Sentinel always points to first item
     	sentinel.next = newFirst;
     	this.size++;
     }
@@ -55,11 +63,13 @@ public class Deque<Item> implements Iterable<Item> {
     	if (item == null) {
     		throw new IllegalArgumentException("Can't Add Null");
     	}
+    	// If it's the first item, then simply call addFirst() method (same result)
     	if (size == 0) {
     		addFirst(item);
     		return;
     	}
     	
+    	// Insert node at the end, make 'Last' node point to it
     	Node newLast = new Node(item, null);
     	last.next.next = newLast;
     	last.next = newLast;
@@ -72,6 +82,8 @@ public class Deque<Item> implements Iterable<Item> {
     	if (this.size == 0) {
     		throw new NoSuchElementException("Deque Empty!");
     	}
+    	
+    	// Save item to object, then make Sentinel skip over that node
     	Item toRemove = sentinel.next.item;
     	sentinel.next = sentinel.next.next;
     	this.size--;
@@ -83,6 +95,9 @@ public class Deque<Item> implements Iterable<Item> {
     	if (this.size == 0) {
     		throw new NoSuchElementException("Deque Empty!");
     	}
+    	
+    	// Save item, then loop over items to find last node (caveat = time complexity O(N))
+    	// This could be optimized by implementing doubly-linked lists
     	Item toRemove = last.next.item;
     	
     	Node p = sentinel;

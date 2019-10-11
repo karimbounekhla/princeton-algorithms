@@ -8,7 +8,8 @@ public class Permutation {
 	public static void main(String[] args) {
 		int k = Integer.parseInt(args[0]);
 		RandomizedQueue<String> rq = new RandomizedQueue<String>();
-
+		
+		// Read input from StdIn and add to Queue
 		try
         {
             String s = StdIn.readString();
@@ -18,11 +19,9 @@ public class Permutation {
                 s = StdIn.readString();
             }
         }
-        catch(NoSuchElementException e)
-        {
-            
-        }
-	
+        catch(NoSuchElementException e) {}
+		
+		// Print 'k' items
 		while (k > 0) {
 			StdOut.println(rq.dequeue());
 			k--;

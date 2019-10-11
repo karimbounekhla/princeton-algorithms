@@ -21,6 +21,7 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
 	 // construct an empty randomized queue
     public RandomizedQueue() {
     	sentinel = new Node(null, null);
+    	// Due to the sentinel node, start at size 1
     	size = 1;
     }
 
@@ -39,10 +40,14 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
     	if (item == null) {
     		throw new IllegalArgumentException("Item cannot be null!");
     	}
+    	
     	Node added = new Node(item, null);
+    	
+    	// If first item, simply make sentinel point to it
     	if (size == 1) { 
     		sentinel.next = added;
     	} else {
+    		// Generate random position from 0 to N items, then travel to that node and add it
     		int i = StdRandom.uniform(0, size);
     		Node p = randomNode(i);
     		added.next = p.next;
@@ -57,6 +62,7 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
     		throw new NoSuchElementException("Deque Empty!");
     	}
     	this.size--;
+    	// Generate random position from 0 to N items, then travel to that node and remove it
     	int i = StdRandom.uniform(0, size);
     	Node p = randomNode(i);
     	Item toRemove = p.next.item;
@@ -69,10 +75,12 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
     	if (size == 1) {
     		throw new NoSuchElementException("Deque Empty!");
     	}
-    	int i = StdRandom.uniform(0, size+1);
+    	// start at 1 due to sentinel node
+    	int i = StdRandom.uniform(1, size);
     	return randomNode(i).item;
     }
     
+    // Loop 'i' times (random number from 0 to size N) and returns the node at that position
     private Node randomNode(int i) {
     	int pos = 0;
     	Node p = sentinel;
@@ -90,6 +98,7 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
 		return new RandomizedQueueIterator();
 	}
 	
+	// Iterator Class with implemented methods
 	private class RandomizedQueueIterator implements Iterator<Item> {
 		private Node p = sentinel.next;
 		
@@ -97,7 +106,7 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
 		public boolean hasNext() {
 			return p != null;
 		}
-
+		
 		@Override
 		public Item next() {
 			if (!hasNext()) {
@@ -131,7 +140,7 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
 		System.out.println(rq.dequeue());
 		System.out.println("size: " + rq.size());
 		System.out.println(rq.dequeue());
-		System.out.println(rq.dequeue());
+		System.out.println(rq.sample());
 		System.out.println("--");
 		//System.out.println(rq.sample());
 		Iterator<Integer> rq1 = rq.iterator();
