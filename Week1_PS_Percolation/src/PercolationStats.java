@@ -5,11 +5,13 @@ public class PercolationStats {
     private int n;
     private int trials;
     private double[] results;
+
     public PercolationStats(int n, int trials) {
         this.n = n;
         this.trials = trials;
         this.results = new double[trials];
 
+        // Run multiple trials and store data in results array
         for (int i = 0; i < trials; i++) {
             Percolation p = new Percolation(n);
 
@@ -20,6 +22,7 @@ public class PercolationStats {
         }
     }
 
+    // Get a random site and open it if it's closed - keeps trying until a site opens
     private void openRandomSite(Percolation p) {
         while (true) {
             int row = StdRandom.uniform(1, n+1);
@@ -47,7 +50,8 @@ public class PercolationStats {
 
 
     public static void main(String[] args) {
-        // TODO Auto-generated method stub
+        // Test the program
+        // To subnit to Coursera, code was edited to take in parameters from the command line as args
         PercolationStats ps = new PercolationStats(200, 100);
 
         System.out.println("mean = " + ps.mean());
