@@ -66,7 +66,9 @@ public class Point implements Comparable<Point> {
         } else if (this.y == that.y) {
             return 0.0;
         } else {
-            return (that.y - this.y) / (that.x - this.x);
+            double top = (double) (that.y - this.y);
+            double bot = (double) (that.x - this.x);
+            return top/bot;
         }
     }
 
@@ -84,7 +86,7 @@ public class Point implements Comparable<Point> {
      */
     public int compareTo(Point that) {
         if (this.y == that.y) {
-            if (this.x == this.y) {
+            if (this.y == this.y) {
                 return 0;
             } else if (this.x < that.x) {
                 return -1;
@@ -136,6 +138,8 @@ public class Point implements Comparable<Point> {
      * Unit tests the Point data type.
      */
     public static void main(String[] args) {
-        /* YOUR CODE HERE */
+        Point a = new Point(343, 334);
+        Point b = new Point(343, 334);
+        System.out.println(a.compareTo(b));
     }
 }
