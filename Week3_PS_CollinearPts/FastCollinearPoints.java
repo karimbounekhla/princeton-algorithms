@@ -6,14 +6,28 @@ import java.util.Arrays;
 import java.util.Comparator;
 
 public class FastCollinearPoints {
-    Point[] pts;
-    LineSegment[] lineSegsDraft;
-    int numSegments;
 
     public FastCollinearPoints(Point[] points) {
         if (points == null) {
             throw new IllegalArgumentException();
         }
+
+        Point[] sortedPoints = points.clone();
+        int N = points.length;
+
+        // Think of p as the origin
+        // For each other point q, determine slope it makes with p
+        // Sort points according to slope they make with p
+        // Check if any 3+ adjacent point in order have equal slopes with respect to p
+
+        for (int i = 0; i < N; i++) {
+            Point p = sortedPoints[i];
+            Point[] slopeSorted = sortedPoints.clone();
+
+
+
+        }
+
 
 
     }
