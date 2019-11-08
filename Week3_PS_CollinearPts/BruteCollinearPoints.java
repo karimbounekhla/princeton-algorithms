@@ -1,4 +1,3 @@
-import com.sun.security.jgss.GSSUtil;
 import edu.princeton.cs.algs4.In;
 import edu.princeton.cs.algs4.StdDraw;
 import edu.princeton.cs.algs4.StdOut;
@@ -6,7 +5,7 @@ import edu.princeton.cs.algs4.StdOut;
 import java.util.Arrays;
 
 /**
- * Brute Force Approach
+ * Brute Force Approach (time complexity n^4)
  */
 
 public class BruteCollinearPoints {
@@ -55,9 +54,13 @@ public class BruteCollinearPoints {
         return lineSegs;
     }
 
+    /**
+     * Code provided by Algorithm Pt.1 Course to check solution
+     */
     public static void main(String[] args) {
-        String fileName = "test cases/input8.txt";
-        In in = new In(fileName);
+//        String in = "test cases/input8.txt";
+//        In in = new In(in);
+        In in = new In(args[0]);
         int n = in.readInt();
         Point[] points = new Point[n];
         for (int i = 0; i < n; i++) {

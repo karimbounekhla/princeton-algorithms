@@ -5,6 +5,10 @@ import edu.princeton.cs.algs4.StdOut;
 import java.util.Arrays;
 import java.util.LinkedList;
 
+/**
+ * More efficient algorithm implementation with a time complexity of n^2*log(n) using
+ * slope sorting to find collinear points.
+ */
 public class FastCollinearPoints {
     LinkedList<LineSegment> results;
 
@@ -59,20 +63,31 @@ public class FastCollinearPoints {
 
     }
 
+    /**
+     * Returns number of collinear segments
+     * @return num of collinear segments
+     */
     public int numberOfSegments() {
         return results.size();
     }
 
+    /**
+     * Returns array of segments, converted from Linked List
+     * @return array of segment
+     */
     public LineSegment[] segments() {
         LineSegment[] arrayResult = new LineSegment[results.size()];
         return results.toArray(arrayResult);
     }
 
+    /**
+     * Code provided by Algorithm Pt.1 Course to check solution
+     */
     public static void main(String[] args) {
-        // read the n points from a file
-//        In in = new In(args[0]);
-        String fileName = "test cases/input8.txt";
-        In in = new In(fileName);
+        // read the n points from a file (filename or args)
+//        String in = "test cases/input8.txt";
+//        In in = new In(in);
+        In in = new In(args[0]);
         int n = in.readInt();
         Point[] points = new Point[n];
         for (int i = 0; i < n; i++) {
@@ -82,21 +97,21 @@ public class FastCollinearPoints {
         }
 
         // draw the points
-//        StdDraw.enableDoubleBuffering();
-//        StdDraw.setXscale(0, 32768);
-//        StdDraw.setYscale(0, 32768);
-//        for (Point p : points) {
-//            p.draw();
-//        }
-//        StdDraw.show();
+        StdDraw.enableDoubleBuffering();
+        StdDraw.setXscale(0, 32768);
+        StdDraw.setYscale(0, 32768);
+        for (Point p : points) {
+            p.draw();
+        }
+        StdDraw.show();
 
         // print and draw the line segments
         FastCollinearPoints collinear = new FastCollinearPoints(points);
         for (LineSegment segment : collinear.segments()) {
             StdOut.println(segment);
-//            segment.draw();
+            segment.draw();
         }
-//        StdDraw.show();
+        StdDraw.show();
     }
 
 }
