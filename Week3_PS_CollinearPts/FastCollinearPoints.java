@@ -10,7 +10,7 @@ import java.util.LinkedList;
  * slope sorting to find collinear points.
  */
 public class FastCollinearPoints {
-    LinkedList<LineSegment> results;
+    private LinkedList<LineSegment> results;
 
     public FastCollinearPoints(Point[] points) {
         if (points == null) {
@@ -85,8 +85,8 @@ public class FastCollinearPoints {
      */
     public static void main(String[] args) {
         // read the n points from a file (filename or args)
-//        String in = "test cases/input8.txt";
-//        In in = new In(in);
+//        String inFile = "test cases/input8.txt";
+//        In in = new In(inFile);
         In in = new In(args[0]);
         int n = in.readInt();
         Point[] points = new Point[n];

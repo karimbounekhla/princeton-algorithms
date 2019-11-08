@@ -3,15 +3,14 @@ import edu.princeton.cs.algs4.StdDraw;
 import edu.princeton.cs.algs4.StdOut;
 
 import java.util.Arrays;
+import java.util.LinkedList;
 
 /**
  * Brute Force Approach (time complexity n^4)
  */
 
 public class BruteCollinearPoints {
-    Point[] pts;
-    LineSegment[] lineSegs;
-    int numSegments;
+    private LinkedList<LineSegment> results;
 
     // finds all line segments containing 4 points
     public BruteCollinearPoints(Point[] points) {
@@ -19,20 +18,17 @@ public class BruteCollinearPoints {
             throw new IllegalArgumentException();
         }
         int N = points.length; // Number of Input Points
-        pts = points;
-        lineSegs = new LineSegment[N];
-        numSegments = 0;
+        results = new LinkedList<LineSegment>();
 
         for (int p = 0; p < N-3; p++) {
             for (int q = p+1; q < N-2; q++) {
                 for (int r = q+1; r < N-1; r++) {
                     for (int s = r+1; s < N; s++) {
-                        if (pts[p].slopeTo(pts[q]) == pts[p].slopeTo(pts[r]) &&
-                            pts[p].slopeTo(pts[q]) == pts[p].slopeTo(pts[s])) {
-                            Point[] temp = {pts[p], pts[q], pts[r], pts[s]};
+                        if (points[p].slopeTo(points[q]) == points[p].slopeTo(points[r]) &&
+                            points[p].slopeTo(points[q]) == points[p].slopeTo(points[s])) {
+                            Point[] temp = {points[p], points[q], points[r], points[s]};
                             Arrays.sort(temp);
-                            lineSegs[numSegments] = new LineSegment(temp[0], temp[3]);
-                            numSegments++;
+                            results.add(new LineSegment(temp[0], temp[3]));
                         }
                     }
                 }
@@ -42,25 +38,22 @@ public class BruteCollinearPoints {
 
     // the number of line segments
     public int numberOfSegments() {
-        LineSegment[] s = new LineSegment[numSegments];
-        for (int i = 0; i < numSegments; i++) {
-
-        }
-        return numSegments;
+        return results.size();
     }
 
     // the line segments
     public LineSegment[] segments() {
-        return lineSegs;
+        LineSegment[] arraySegments = new LineSegment[results.size()];
+        return results.toArray(arraySegments);
     }
 
     /**
      * Code provided by Algorithm Pt.1 Course to check solution
      */
     public static void main(String[] args) {
-//        String in = "test cases/input8.txt";
-//        In in = new In(in);
-        In in = new In(args[0]);
+        String inFile = "test cases/input8.txt";
+        In in = new In(inFile);
+//        In in = new In(args[0]);
         int n = in.readInt();
         Point[] points = new Point[n];
         for (int i = 0; i < n; i++) {
