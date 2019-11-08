@@ -56,8 +56,8 @@ public class BruteCollinearPoints {
     }
 
     public static void main(String[] args) {
-        String filet = "test cases/input8.txt";
-        In in = new In(filet);
+        String fileName = "test cases/input8.txt";
+        In in = new In(fileName);
         int n = in.readInt();
         Point[] points = new Point[n];
         for (int i = 0; i < n; i++) {
