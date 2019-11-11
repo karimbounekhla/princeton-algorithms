@@ -12,22 +12,31 @@ public class Solver {
     private SearchNode solution;
     private boolean isSolvable;
 
+    /**
+     * Create inner class SearchNode that can be used in the PQ
+     * When finding the priority, we are looking at # of moves and Hamming number to determine
+     * how close we are to the optimal solution.
+     */
     private class SearchNode implements Comparable<SearchNode> {
         private Board b;
         private int moves;
         private SearchNode prev;
 
+        // Constructor
         public SearchNode(Board b, int moves, SearchNode prev) {
             this.b = b;
             this.moves = moves;
             this.prev = prev;
         }
 
+        // Compare SearchNodes by their priorities
         @Override
         public int compareTo(SearchNode o) {
             return this.priority() - o.priority();
         }
 
+        // Priority is hamming number + number of moves done so far.
+        // We are looking to minimize this.
         public int priority() {
             return this.b.hamming() + this.moves;
         }
@@ -51,19 +60,30 @@ public class Solver {
             throw new IllegalArgumentException();
         }
 
+        // Initialize the PQ with the first search node, containing initial board
         MinPQ<SearchNode> gameTree = new MinPQ<SearchNode>();
         gameTree.insert(new SearchNode(initial, 0, null));
 
         while (true) {
+            // For each iteration, get the minimum Search Node
             SearchNode curr = gameTree.delMin();
             Board currBoard = curr.getB();
 
+            // If solution is found, stop
             if (currBoard.isGoal()) {
                 solution = curr;
                 isSolvable = true;
                 break;
             }
 
+            // Run A* algorithm on puzzle instance with a twin (swapping 2 tiles that are not empty)
+            // Only one of these will lead to a solvable puzzle - hence if it is the twin, puzzle is not solvable
+//            if (currBoard.hamming() == 2 && currBoard.twin().isGoal()) {
+//                isSolvable = false;
+//                break;
+//            }
+
+            // Get current move, and assign previous board
             int moves = curr.getMoves();
             Board prevBoard;
             if (moves > 0) {
@@ -72,14 +92,15 @@ public class Solver {
                 prevBoard = null;
             }
 
+            // Iterate through neighbors and add to PQ
+            // Only do so if not null, and if neighbor isn't the same result as previous board
+            // ^ Save time
             for (Board nextBoard : currBoard.neighbors()) {
                 if (!nextBoard.equals(prevBoard)) {
                     gameTree.insert(new SearchNode(nextBoard, moves+1, curr));
                 }
             }
         }
-
-
     }
 
     // is the initial board solvable?
@@ -114,7 +135,7 @@ public class Solver {
 
         // create initial board from file
         // In in = new In(args[0]);
-        String inp = "test/puzzle04.txt";
+        String inp = "test/puzzle05.txt";
         In in = new In(inp);
         int n = in.readInt();
         int[][] tiles = new int[n][n];
