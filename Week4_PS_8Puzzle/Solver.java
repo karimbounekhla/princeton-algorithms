@@ -99,6 +99,9 @@ public class Solver {
                 if (!nextBoard.equals(prevBoard)) {
                     gameTree.insert(new SearchNode(nextBoard, moves+1, curr));
                 }
+                if (prevBoard != null && nextBoard.equals(prevBoard)) { continue; }
+
+                gameTree.insert(new SearchNode(nextBoard, moves+1, curr));
             }
         }
     }
