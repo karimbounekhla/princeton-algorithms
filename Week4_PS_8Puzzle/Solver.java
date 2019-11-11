@@ -96,9 +96,6 @@ public class Solver {
             // Only do so if not null, and if neighbor isn't the same result as previous board
             // ^ Save time
             for (Board nextBoard : currBoard.neighbors()) {
-                if (!nextBoard.equals(prevBoard)) {
-                    gameTree.insert(new SearchNode(nextBoard, moves+1, curr));
-                }
                 if (prevBoard != null && nextBoard.equals(prevBoard)) { continue; }
 
                 gameTree.insert(new SearchNode(nextBoard, moves+1, curr));
