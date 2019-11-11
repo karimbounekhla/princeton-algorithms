@@ -1,36 +1,35 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
 
 /**
- * Data type that models an n-by-n board with sliding tiles
+ * Data type that models an n-by-n board with sliding tiles - to be solved using A* Search
  * https://coursera.cs.princeton.edu/algs4/assignments/8puzzle/specification.php
  *
  * Work in Progress
  */
 
 public class Board {
-    int[][] board;
+    int[][] tiles;
     int N;
     int[] emptyPos;
-    ArrayList<Board> neighbors;
 
     // create a board from an n-by-n array of tiles,
     // where tiles[row][col] = tile at (row, col)
     public Board(int[][] tiles) {
-        this.board = tiles;
+        this.tiles = tiles;
         this.N = tiles.length; // N by N array
-        getBlank();
-        neighbors = new ArrayList<Board>();
+        setBlank();
     }
 
-    private int[] getBlank() {
+    private void setBlank() {
         emptyPos = new int[2];
         for (int i = 0; i < N; i++) {
             for (int j = 0; j < N; j++) {
-                if (board[i][j] == 0) {
+                if (tiles[i][j] == 0) {
                     emptyPos[0] = i;
                     emptyPos[1] = j;
-                    return emptyPos;
+                    return;
                 }
             }
         }
@@ -42,7 +41,7 @@ public class Board {
         for (int i = 0; i < N; i++) {
             boardView += "\n ";
             for (int j = 0; j < N; j++) {
-                boardView += board[i][j] + "   ";
+                boardView += tiles[i][j] + "   ";
             }
         }
         return boardView;
@@ -59,7 +58,7 @@ public class Board {
         int hamming = -1; // Start at -1 because will always have 1 added distance due to '0' tile
         for (int i = 0; i < N; i++) {
             for (int j = 0; j < N; j++) {
-                if (board[i][j] != pos) {
+                if (tiles[i][j] != pos) {
                     hamming++;
                 }
                 pos++;
@@ -73,7 +72,7 @@ public class Board {
         int manhattan = 0;
         for (int i = 0; i < N; i++) {
             for (int j = 0; j < N; j++) {
-                int val = board[i][j];
+                int val = tiles[i][j];
 
                 if (val == 0) {
                     continue;
@@ -96,18 +95,7 @@ public class Board {
 
     // is this board the goal board?
     public boolean isGoal() {
-        int [][] t = new int[N][N];
-        int k = 1;
-        for (int i = 0; i < N; i++) {
-            for (int j = 0; j < N; j++) {
-                t[i][j] = k++;
-            }
-        }
-        t[N-1][N-1] = 0;
-
-        Board goal = new Board(t);
-
-        return this.equals(goal);
+        return this.hamming() == 0;
     }
 
     // does this board equal y?
@@ -131,14 +119,68 @@ public class Board {
 
     // all neighboring boards
     public Iterable<Board> neighbors() {
+        ArrayList<Board> neighborsList = new ArrayList<Board>();
+        // Left Neighbor
+        if (checkValid(emptyPos[0], emptyPos[1]-1)) {
+            int[][] neighbor = makeCopy();
+            swap(neighbor, emptyPos[0], emptyPos[1], emptyPos[0], emptyPos[1]-1);
+            neighborsList.add(new Board(neighbor));
+        }
+        // Right Neighbor
+        if (checkValid(emptyPos[0], emptyPos[1]+1)) {
+            int[][] neighbor = makeCopy();
+            swap(neighbor, emptyPos[0], emptyPos[1], emptyPos[0], emptyPos[1]+1);
+            neighborsList.add(new Board(neighbor));
+        }
+        // Top Neighbor
+        if (checkValid(emptyPos[0]-1, emptyPos[1])) {
+            int[][] neighbor = makeCopy();
+            swap(neighbor, emptyPos[0], emptyPos[1], emptyPos[0]-1, emptyPos[1]);
+            neighborsList.add(new Board(neighbor));
+        }
+        // Bottom Neighbor
+        if (checkValid(emptyPos[0]+1, emptyPos[1])) {
+            int[][] neighbor = makeCopy();
+            swap(neighbor, emptyPos[0], emptyPos[1], emptyPos[0]+1, emptyPos[1]);
+            neighborsList.add(new Board(neighbor));
+        }
+        return neighborsList;
+    }
 
-        return neighbors;
+    private boolean checkValid(int row, int col) {
+        if (row < 0 || row >= N || col < 0 || col >= N) {
+            return false;
+        }
+        return true;
+    }
+
+    private int[][] makeCopy() {
+        int[][] newArr = new int[N][N];
+        for (int i = 0; i < N; i++) {
+            for (int j = 0; j < N; j++) {
+                newArr[i][j] = tiles[i][j];
+            }
+        }
+        return newArr;
     }
 
     // a board that is obtained by exchanging any pair of tiles
-//    public Board twin() {
-//
-//    }
+    public Board twin() {
+        int[][] twin = tiles.clone();
+        if (emptyPos[0] != 0) {
+            swap(twin, 0, 0, 0, 1);
+        } else {
+            swap(twin, 1, 0, 1, 1);
+        }
+        return new Board(twin);
+    }
+
+    private void swap(int[][] board, int rowOne, int colOne, int rowTwo, int colTwo) {
+        int temp = board[rowOne][colOne];
+        board[rowOne][colOne] = board[rowTwo][colTwo];
+        board[rowTwo][colTwo] = temp;
+
+    }
 
     // unit testing
     public static void main(String[] args) {
@@ -151,19 +193,21 @@ public class Board {
         }
         t[2][2] = 0;
 
-//        t[0][0] = 8;
-//        t[0][1] = 1;
-//        t[0][2] = 3;
-//        t[1][0] = 4;
-//        t[1][1] = 0;
-//        t[1][2] = 2;
-//        t[2][0] = 7;
-//        t[2][1] = 6;
-//        t[2][2] = 5;
+        t[0][0] = 8;
+        t[0][1] = 1;
+        t[0][2] = 3;
+        t[1][0] = 4;
+        t[1][1] = 0;
+        t[1][2] = 2;
+        t[2][0] = 7;
+        t[2][1] = 6;
+        t[2][2] = 5;
         Board b = new Board(t);
         System.out.println(b);
 
-        System.out.println(b.isGoal());
+        for (Board u : b.neighbors()) {
+            System.out.println(u);
+        }
     }
 
 }
