@@ -10,9 +10,9 @@ import java.util.Iterator;
  */
 
 public class Board {
-    int[][] tiles;
-    int N;
-    int[] emptyPos;
+    private final int[][] tiles;
+    private int N;
+    private int[] emptyPos;
 
     // create a board from an n-by-n array of tiles,
     // where tiles[row][col] = tile at (row, col)
