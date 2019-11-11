@@ -5,8 +5,6 @@ import java.util.Iterator;
 /**
  * Data type that models an n-by-n board with sliding tiles - to be solved using A* Search
  * https://coursera.cs.princeton.edu/algs4/assignments/8puzzle/specification.php
- *
- * Work in Progress
  */
 
 public class Board {
