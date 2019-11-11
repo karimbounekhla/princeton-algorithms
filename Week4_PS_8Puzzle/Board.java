@@ -11,7 +11,7 @@ import java.util.Iterator;
 public class Board {
     int[][] board;
     int N;
-    int emptyPos;
+    int[] emptyPos;
     ArrayList<Board> neighbors;
 
     // create a board from an n-by-n array of tiles,
@@ -19,7 +19,21 @@ public class Board {
     public Board(int[][] tiles) {
         this.board = tiles;
         this.N = tiles.length; // N by N array
+        getBlank();
         neighbors = new ArrayList<Board>();
+    }
+
+    private int[] getBlank() {
+        emptyPos = new int[2];
+        for (int i = 0; i < N; i++) {
+            for (int j = 0; j < N; j++) {
+                if (board[i][j] == 0) {
+                    emptyPos[0] = i;
+                    emptyPos[1] = j;
+                    return emptyPos;
+                }
+            }
+        }
     }
 
     // string representation of this board
