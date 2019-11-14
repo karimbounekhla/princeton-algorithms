@@ -2,7 +2,7 @@ import edu.princeton.cs.algs4.In;
 import edu.princeton.cs.algs4.StdOut;
 import edu.princeton.cs.algs4.MinPQ;
 
-import java.util.*;
+import java.util.LinkedList;
 
 /**
  * This class implements A* search to solve a n-by-n slider puzzle using Priority Queues
@@ -38,7 +38,7 @@ public class Solver {
         // Priority is hamming number + number of moves done so far.
         // We are looking to minimize this.
         public int priority() {
-            return this.b.hamming() + this.moves;
+            return this.b.manhattan() + this.moves;
         }
 
         public Board getB() {
