@@ -15,9 +15,10 @@ This assignment explores the concept of percolation using a model composed of an
 ![Percolation](img/percolation.png)
 
 (From the problem statement)
-```
-Given a composite systems comprised of randomly distributed insulating and metallic materials: what fraction of the materials need to be metallic so that the composite system is an electrical conductor? Given a porous landscape with water on the surface (or oil below), under what conditions will the water be able to drain through to the bottom (or the oil to gush through to the surface)? Scientists have defined an abstract process known as percolation to model such situations.
-```
+
+*Given a composite systems comprised of randomly distributed insulating and metallic materials:  what fraction of the materials need to be metallic so that the composite system is an electrical conductor? Given a porous landscape with water on the surface (or oil below), under what conditions will the water be able to drain through to the bottom (or the oil to gush through to the surface)? Scientists have defined an abstract process known as percolation to model such situations.*
+
+
 
 The objective of this problem set was to determine the probability that a system will percolate if sites are independent and set to open with probability `p`. When `p` equals 0, the system does not percolate, and when `p` equals 1, the system percolates (all sites are open). When `n` is sufficiently large, there is a threshold probability `p*` at which the system will tend to percolate (around 0.593).  
 
@@ -105,10 +106,14 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
 
  The second method implements fast sorting algorithm to find collinear points in N^2*log(N) time.
  ```
- Think of p as the origin.
+Think of p as the origin.
+
 For each other point q, determine the slope it makes with p.
+
 Sort the points according to the slopes they makes with p.
-Check if any 3 (or more) adjacent points in the sorted order have equal slopes with respect to p. If so, these points, together with p, are collinear.
+
+Check if any 3 (or more) adjacent points in the sorted order have equal slopes with respect to p. 
+If so, these points, together with p, are collinear.
 ```
 
 Given an input of points, such as this.
@@ -174,13 +179,17 @@ The result is a list of collinear point (Displayed on the right using a visualiz
  ## Week 4 - 8Puzzle
 
  The goal of this assignment is to write a program that solves the 8-puzzle problem using the A* search algorithm.
+ 
+ 
+(From the problem statement)
 
-  ![Collinear](img/8puzzle.png)
+*The 8-puzzle is a sliding puzzle that is played on a 3-by-3 grid with 8 square tiles labeled 1 through 8, plus a blank
+  square. The goal is to rearrange the tiles so that they are in row-major order, using as few moves as possible. 
+  You are permitted to slide tiles either horizontally or vertically into the blank square. 
+  The following diagram shows a sequence of moves from an initial board (left) to the goal board (right).*
 
-  Problem Statement
-  ```
-  The 8-puzzle is a sliding puzzle that is played on a 3-by-3 grid with 8 square tiles labeled 1 through 8, plus a blank square. The goal is to rearrange the tiles so that they are in row-major order, using as few moves as possible. You are permitted to slide tiles either horizontally or vertically into the blank square. The following diagram shows a sequence of moves from an initial board (left) to the goal board (right).
-  ```
+![8puzzle](img/8puzzle.png)
+
 
 This problem was solved with the A* search algorithm and the use of priority queues. The priority function used used is based on the Manhattan distance = the number of moves made so far + the manhattan distance of the board. 
 
