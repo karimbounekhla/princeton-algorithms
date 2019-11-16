@@ -32,7 +32,7 @@ Results were consistent with the experimentally observed percolation threshold.
 
 ## Week 2 - Queues
 
-The goal of this assignment was to implement a deque (double-ended queue and a randomized queue) implementing the following API's
+The goal of this assignment was to program a deque (double-ended queue) and a randomized queue implementing the following API's (respectively):
 
 ```
 public class Deque<Item> implements Iterable<Item> {
