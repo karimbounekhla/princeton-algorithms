@@ -98,7 +98,7 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
 
 ## Week 3 - Collinear Points
 
- Given a set of `n` distict points, the goal of this assignment is to find every (maximal) line segments that connects a subset of 4 or moore of the points
+ Given a set of `n` distict points, the goal of this assignment is to find every (maximal) line segments that connects a subset of 4 or more of the points
 
  ![Collinear](img/collinear.png)
 
