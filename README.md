@@ -1,4 +1,4 @@
-# Algorithms Part 1 (Princeton)
+# Algorithms (Princeton University)
 
 [Introduction to Algorithms](https://coursera.org/learn/algorithms-part1), created by Princeton University.
 
