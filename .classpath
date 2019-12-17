@@ -8,5 +8,6 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="lib" path="/Users/karimbounekhla/SoftwareEng/algs4.jar"/>
+	<classpathentry kind="src" path="Week5_PS_Kd-Trees"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
